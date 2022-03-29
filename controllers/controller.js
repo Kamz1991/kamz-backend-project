@@ -1,12 +1,20 @@
-const { selectTopics } = require("../models/model");
+const { selectTopics, selectAuthorById } = require("../models/model");
+
 exports.getTopics = (req, res) => {
-  console.log("in controller ");
   selectTopics()
     .then((result) => {
-      console.log(result);
       res.status(200).send({ topics: result });
     })
     .catch((err) => {
       if (err) console.log(err);
     });
+};
+
+exports.getAuthorById = (req, res, next) => {
+  const { article_id } = req.params;
+  selectAuthorById(article_id)
+    .then((article) => {
+      res.status(200).send({ article });
+    })
+    .catch(next);
 };
