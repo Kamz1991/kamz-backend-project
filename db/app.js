@@ -1,4 +1,8 @@
-const { getTopics, getAuthorById } = require("../controllers/controller");
+const {
+  getTopics,
+  getAuthorById,
+  patchArticleById,
+} = require("../controllers/controller");
 const express = require("express");
 
 const app = express();
@@ -9,8 +13,10 @@ app.get("/api/topics", getTopics);
 
 app.get("/api/articles/:article_id", getAuthorById);
 
+app.patch("/api/articles/:article_id", patchArticleById);
+
 app.use((err, req, res, next) => {
-  const badReqCodes = ["42703", "22P02"];
+  const badReqCodes = ["42703", "22P02", "42601"];
   if (badReqCodes.includes(err.code)) {
     res.status(400).send({ msg: "bad request" });
   } else {
