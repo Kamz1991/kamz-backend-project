@@ -16,7 +16,7 @@ app.get("/api/articles/:article_id", getAuthorById);
 app.patch("/api/articles/:article_id", patchArticleById);
 
 app.use((err, req, res, next) => {
-  const badReqCodes = ["42703", "22P02", "42601"];
+  const badReqCodes = ["42703", "22P02", "42601", "23502"];
   if (badReqCodes.includes(err.code)) {
     res.status(400).send({ msg: "bad request" });
   } else {

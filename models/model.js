@@ -26,5 +26,9 @@ exports.updateArticlesById = async (article_id, newVotes) => {
     RETURNING *;`,
     [newVotes, article_id]
   );
-  return result.rows[0];
+  if (!result) {
+    return Promise.reject({ status: 400, msg: "bad request" });
+  } else {
+    return result.rows[0];
+  }
 };

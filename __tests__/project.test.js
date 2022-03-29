@@ -68,7 +68,6 @@ describe(" PATCH /api/articles/:article_id", () => {
       .send(articleUpdates)
       .expect(200)
       .then((results) => {
-        console.log(results.body + "<<<<<<<<");
         expect(results.body).toEqual(
           expect.objectContaining({
             article_id: 1,
@@ -80,6 +79,28 @@ describe(" PATCH /api/articles/:article_id", () => {
             votes: 150,
           })
         );
+      });
+  });
+  test(" 400: no inc votes on requested body", () => {
+    const articleUpdates = {};
+    return request(app)
+      .patch("/api/articles/1")
+      .send(articleUpdates)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("bad request");
+      });
+  });
+  test("invalid inc votes like a string instead of a number", () => {
+    const articleUpdates = {
+      inc_votes: "dog",
+    };
+    return request(app)
+      .patch("/api/articles/1")
+      .send(articleUpdates)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("bad request");
       });
   });
 });
