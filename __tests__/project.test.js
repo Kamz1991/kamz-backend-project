@@ -103,4 +103,16 @@ describe(" PATCH /api/articles/:article_id", () => {
         expect(body.msg).toBe("bad request");
       });
   });
+  test("invalid article id request", () => {
+    const articleUpdates = {
+      inc_votes: 50,
+    };
+    return request(app)
+      .patch("/api/articles/1000")
+      .send(articleUpdates)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("article not found");
+      });
+  });
 });
