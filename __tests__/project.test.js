@@ -59,7 +59,7 @@ describe("GET /api/articles/article:id", () => {
 });
 
 describe(" PATCH /api/articles/:article_id", () => {
-  it("status:200, responds with the updated article", () => {
+  test("status:200, responds with the updated article", () => {
     const articleUpdates = {
       inc_votes: 50,
     };
@@ -133,5 +133,20 @@ describe("1. GET /api/users", () => {
           );
         });
       });
+  });
+});
+
+describe("GET /api/articles/article:id/comment count", () => {
+  test("status:200, responds with requested article", async () => {
+    const res = await request(app).get("/api/articles/1").expect(200);
+    expect(res.body.article).toMatchObject({
+      article_id: 1,
+      author: expect.any(String),
+      body: expect.any(String),
+      comment_count: expect.any(String),
+      created_at: expect.any(String),
+      title: expect.any(String),
+      votes: expect.any(Number),
+    });
   });
 });
