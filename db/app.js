@@ -5,6 +5,7 @@ const {
   patchArticleById,
 } = require("../controllers/patcharticlebyid.controller");
 const { getUsers } = require("../controllers/getUsers.controller");
+const { getArticles } = require("../controllers/getArticles.controller");
 const app = express();
 
 app.use(express.json());
@@ -16,6 +17,8 @@ app.get("/api/articles/:article_id", getArticleById);
 app.patch("/api/articles/:article_id", patchArticleById);
 
 app.get("/api/users", getUsers);
+
+app.get("/api/articles", getArticles);
 
 app.use((err, req, res, next) => {
   const badReqCodes = ["42703", "22P02", "42601", "23502"];
