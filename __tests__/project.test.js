@@ -199,10 +199,10 @@ describe(" GET /api/articles/:article_id/comments", () => {
         });
       });
   });
-  test("status: 200 no comments found for that article id", () => {
+  test("status: 204 no comments found for that article id", () => {
     return request(app)
       .get("/api/articles/4/comments")
-      .expect(200)
+      .expect(204)
       .then(({ body }) => {
         expect(body.comments).toEqual([]);
       });
