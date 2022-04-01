@@ -202,7 +202,7 @@ describe(" GET /api/articles/:article_id/comments", () => {
   test("status: 204 no comments found for that article id", () => {
     return request(app)
       .get("/api/articles/4/comments")
-      .expect(204)
+      .expect(200)
       .then(({ body }) => {
         expect(body.comments).toEqual([]);
       });
