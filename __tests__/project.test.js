@@ -176,3 +176,25 @@ describe(" GET /api/articles", () => {
       });
   });
 });
+describe.only(" Post /api/articles/:article_id", () => {
+  test("status:201, responds with newly posted comment ", () => {
+    const newComment = {
+      username: "butter_bridge",
+      body: "The greatest alive",
+    };
+    return request(app)
+      .post("/api/articles/1/comments")
+      .send(newComment)
+      .expect(201)
+      .then((results) => {
+        expect(results.body.comment).toEqual({
+          article_id: 1,
+          author: "butter_bridge",
+          body: "The greatest alive",
+          comment_id: 19,
+          created_at: expect.any(String),
+          votes: 0,
+        });
+      });
+  });
+});

@@ -28,6 +28,7 @@ app.post("/api/articles/:article_id/comments", postCommentById);
 app.use((err, req, res, next) => {
   const badReqCodes = ["42703", "22P02", "42601", "23502"];
   if (badReqCodes.includes(err.code)) {
+    console.log(err);
     res.status(400).send({ msg: "bad request" });
   } else {
     next(err);
