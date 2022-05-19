@@ -14,6 +14,8 @@ const {
 const {
   getArticleCommentsById,
 } = require("./controllers/getArticleCommentsById.controller");
+const { deleteComment } = require("./controllers/deleteComment.Controller");
+
 const app = express();
 
 app.use(express.json());
@@ -32,6 +34,8 @@ app.get("/api/articles", getArticles);
 app.post("/api/articles/:article_id/comments", postCommentById);
 
 app.get("/api/articles/:article_id/comments", getArticleCommentsById);
+
+app.delete("/api/comments/:comment_id", deleteComment);
 
 app.use((err, req, res, next) => {
   const badReqCodes = ["42703", "22P02", "42601", "23502"];
