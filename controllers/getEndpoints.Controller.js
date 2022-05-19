@@ -1,5 +1,11 @@
-const endpoints = require("../endpoints.json");
+const { fetchEndpoints } = require("../models/getEndpoints.Model");
 
-exports.getEndpoints = async (req, res, next) => {
-  res.send(endpoints);
+exports.getEndpoints = (req, res, next) => {
+  fetchEndpoints()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      next(err);
+    });
 };

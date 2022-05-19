@@ -10,10 +10,8 @@ exports.sendCommentById = async (article_id, new_comment) => {
   );
 
   if (!result.rows[0]) {
-    console.log(result.rows[0]);
     return Promise.reject({ status: 404, msg: "article not found" });
   } else {
-    console.log(result.rows[0]);
     return result.rows[0];
   }
 };

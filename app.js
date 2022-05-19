@@ -63,6 +63,9 @@ app.all("/*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  if (err.status) {
+    res.status(err.status).send({ msg: err.message });
+  }
   console.log(err, "<<< err");
   res.status(500).send({ msg: "internal server error" });
 });
