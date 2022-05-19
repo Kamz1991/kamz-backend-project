@@ -272,7 +272,7 @@ describe("GET /api/articles queries", () => {
       .get("/api/articles?sort_by=bannana&order=asc")
       .expect(400);
   });
-  test.only("400:rejects invalid order", async () => {
+  test("400:rejects invalid order", async () => {
     const res = await request(app)
       .get("/api/articles?sort_by=created_at&order=up")
       .expect(400);
