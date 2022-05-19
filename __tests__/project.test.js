@@ -277,8 +277,8 @@ describe("GET /api/articles queries", () => {
       .get("/api/articles?sort_by=created_at&order=up")
       .expect(400);
   });
+});
 
-  
 describe("DELETE /api/comments/:comment_id", () => {
   test("204: responds with an empty response body", () => {
     return request(app).delete("/api/comments/1").expect(204);
