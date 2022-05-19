@@ -15,6 +15,7 @@ const {
   getArticleCommentsById,
 } = require("./controllers/getArticleCommentsById.controller");
 const { deleteComment } = require("./controllers/deleteComment.Controller");
+const { getEndpoints } = require("./controllers/getEndpoints.Controller");
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.get("/api/articles", getArticles);
 app.post("/api/articles/:article_id/comments", postCommentById);
 
 app.get("/api/articles/:article_id/comments", getArticleCommentsById);
+
+app.get("/api", getEndpoints);
 
 app.delete("/api/comments/:comment_id", deleteComment);
 
