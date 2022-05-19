@@ -1,7 +1,7 @@
 const { selectArticles } = require("../models/getArticles.models");
 
 exports.getArticles = (req, res) => {
-  selectArticles()
+  selectArticles(req.query)
     .then((articles) => {
       res.status(200).send({ articles });
     })
