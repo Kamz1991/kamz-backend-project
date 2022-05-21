@@ -253,14 +253,14 @@ describe("GET /api/articles queries", () => {
     console.log(res.body.articles[0], "<<<<<<<<<<<<");
     expect(res.body.articles).toBeSortedBy("created_at", { descending: true });
   });
-  test("200: sorted by single field asc", async () => {
+  test.only("200: sorted by single field asc", async () => {
     const res = await request(app)
       .get("/api/articles?sort_by=votes&order=asc")
       .expect(200);
     console.log(res.body.articles[0], "<<<<<<<<<<<<");
     expect(res.body.articles).toBeSortedBy("votes", { coerce: true });
   });
-  test("200: sort by single field desc", async () => {
+  test.only("200: sort by single field desc", async () => {
     const res = await request(app)
       .get("/api/articles?sort_by=votes&order=desc")
       .expect(200);

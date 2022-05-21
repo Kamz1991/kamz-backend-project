@@ -3,7 +3,7 @@ const { selectTopics } = require("../models/getTopic.model");
 
 exports.selectArticles = async (query) => {
   const { sort_by = "created_at", order = "desc" } = query;
-  console.log(sort_by, order, "<<<<<<<<<");
+
   const validColumns = [
     "article_id",
     "title",
@@ -18,13 +18,15 @@ exports.selectArticles = async (query) => {
     return Promise.reject({ status: 400, message: "bad request" });
   }
   if (!["asc", "desc"].includes(order.toLowerCase())) {
-    console.log("IN HERE");
     return Promise.reject({ status: 400, message: "bad request" });
   }
-
+  const topicsQuery = !!query.topic ? `WHERE topic='${query.topic}'` : "";
+  console.log(topicsQuery);
   const result = await db.query(`SELECT * 
   FROM articles
+  ${topicsQuery}
   ORDER BY ${sort_by}  ${order}
+  
   `);
 
   return result.rows;
