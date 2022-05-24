@@ -1,4 +1,4 @@
-Backgrond
+Background
 As part of my coding adventure as a Northcoders student, I have created an API for programmatically retrieving application data. The purpose is to replicate the development of a real-world backend service which I hope will eventually provide this information to the front end architecture.
 
 This server can be used to obtain articles, comments, users, and topics, as well as methods for adding, deleting, and updating information about them in various ways.
