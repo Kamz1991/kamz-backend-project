@@ -20,6 +20,12 @@ exports.selectArticles = async (query) => {
   if (!["asc", "desc"].includes(order.toLowerCase())) {
     return Promise.reject({ status: 400, message: "bad request" });
   }
+  //  `SELECT articles.*,
+  //   COUNT(comment_id) AS comment_count
+  //   FROM articles
+  //   LEFT JOIN comments ON comments.article_id = articles.article_id
+  // `;
+
   const topicsQuery = !!query.topic ? `WHERE topic='${query.topic}'` : "";
   console.log(topicsQuery);
   const result = await db.query(`SELECT * 
