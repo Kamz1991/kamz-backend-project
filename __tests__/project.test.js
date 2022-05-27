@@ -198,55 +198,64 @@ describe(" Post /api/articles/:article_id", () => {
         });
       });
   });
-
-  describe(" GET /api/articles/:article_id/comments", () => {
-    test("status:200, an array of comments for the given article_id ", () => {
-      return request(app)
-        .get("/api/articles/3/comments")
-        .expect(200)
-        .then(({ body }) => {
-          const { comments } = body;
-          expect(comments).toBeInstanceOf(Array);
-          comments.forEach((comment) => {
-            expect(comment).toEqual(
-              expect.objectContaining({
-                article_id: expect.any(Number),
-                votes: expect.any(Number),
-                created_at: expect.any(String),
-                comment_id: expect.any(Number),
-                author: expect.any(String),
-                body: expect.any(String),
-              })
-            );
-          });
-        });
-    });
-    test("status: 204 no comments found for that article id", () => {
-      return request(app)
-        .get("/api/articles/4/comments")
-        .expect(200)
-        .then(({ body }) => {
-          expect(body.comments).toEqual([]);
-        });
-    });
-    test("404: for an article_id that does not exist ", () => {
-      return request(app)
-        .get("/api/articles/1000/comments")
-        .expect(404)
-        .then(({ body }) => {
-          expect(body.msg).toBe("article not found");
-        });
-    });
-    test("400 when article_id is not an integer", () => {
-      return request(app)
-        .get("/api/articles/badId/comments")
-        .expect(400)
-        .then(({ body }) => {
-          expect(body.msg).toBe("bad request");
-        });
-    });
+  it("POST status:400, when posted comment is missing properties", async () => {
+    const commentToPost = { username: "butter_bridge" };
+    const { body } = await request(app)
+      .post("/api/articles/2/comments")
+      .send(commentToPost)
+      .expect(400);
+    expect(body.msg).toBe("bad request");
   });
 });
+
+describe(" GET /api/articles/:article_id/comments", () => {
+  test("status:200, an array of comments for the given article_id ", () => {
+    return request(app)
+      .get("/api/articles/3/comments")
+      .expect(200)
+      .then(({ body }) => {
+        const { comments } = body;
+        expect(comments).toBeInstanceOf(Array);
+        comments.forEach((comment) => {
+          expect(comment).toEqual(
+            expect.objectContaining({
+              article_id: expect.any(Number),
+              votes: expect.any(Number),
+              created_at: expect.any(String),
+              comment_id: expect.any(Number),
+              author: expect.any(String),
+              body: expect.any(String),
+            })
+          );
+        });
+      });
+  });
+  test("status: 204 no comments found for that article id", () => {
+    return request(app)
+      .get("/api/articles/4/comments")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.comments).toEqual([]);
+      });
+  });
+  test("404: for an article_id that does not exist ", () => {
+    return request(app)
+      .get("/api/articles/1000/comments")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("article not found");
+      });
+  });
+  test("400 when article_id is not an integer", () => {
+    return request(app)
+      .get("/api/articles/badId/comments")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("bad request");
+      });
+  });
+});
+
 describe("GET /api/articles queries", () => {
   test("200: sorted by default desc created_at", async () => {
     const res = await request(app).get("/api/articles").expect(200);

@@ -13,6 +13,8 @@ exports.sendCommentById = async (article_id, new_comment) => {
 
   if (!result.rows[0]) {
     return Promise.reject({ status: 404, msg: "article not found" });
+  } else if (!new_comment.body) {
+    return Promise.reject({ status: 400, msg: "Bad Request" });
   } else {
     return result.rows[0];
   }
